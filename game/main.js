@@ -15,10 +15,67 @@ $(document).ready(function(){
  * The game
  */
 hex.Game = (function(){
+	// Logic vars
 	var hintIndex1, hintIndex2,
 	nbrOfSets = 0,
 	deck = [],
 	activeCards = [];
+	
+	// Display vars
+	var currCard, comapareCard1, comapareCard2, comapareCard3,
+	set, lastIndex,
+	toggle = [],
+	pressedCount = 0,
+	newSet = true,
+	score = 0,
+	gameStarted = true,
+	lastIndexState = true,
+	maxOnTable = 12;
+	
+	// Initiates the game
+	var init = function() {
+		
+		//TODO setup music
+		
+		updateUI(getActiveCards(12));
+		
+		//TODO start timebonus timer
+		
+		console.log('Game started');
+	};
+	
+	// update cards(divs) and text
+	function updateUI(activeCards) {
+		for (var i = 0; i < maxOnTable; i++) {
+			//add image to card
+			$('#card' + i).css('background-image', 'url(' + activeCards[i].imgSrc + ')');
+		}
+		if (newSet == true) {
+			for (var i = 0; i < maxOnTable; i++) {
+				//iv[i].startAnimation(placeCards[i]);
+			}
+			newSet = false;
+		} else if (newSet == false) {
+			// Byta bild animation.
+//			iv[compareCard1.getIndex()].startAnimation(replaceCards[0]);
+//			iv[compareCard2.getIndex()].startAnimation(replaceCards[1]);
+//			iv[compareCard3.getIndex()].startAnimation(replaceCards[2]);
+//			replaceCards[2].setAnimationListener(new AnimationListener() {
+//			@Override
+//			public void onAnimationStart(Animation animation) {
+//			}
+//			@Override
+//			public void onAnimationRepeat(Animation animation) {
+//			}
+//			@Override
+//			public void onAnimationEnd(Animation animation) {
+//			iv[compareCard1.getIndex()].clearAnimation();
+//			iv[compareCard2.getIndex()].clearAnimation();
+//			iv[compareCard3.getIndex()].clearAnimation();
+//			}
+//			});
+		};
+	}
   
 	// Creates deck and places 12 cards in active
 	function placeCardsOnTable(cardsNeeded) {
@@ -123,12 +180,6 @@ hex.Game = (function(){
 		}
 		console.log("SET i kort: " + nbrOfSets);
 	}
-	
-	// Initiates the game
-	var init = function() {
-
-		console.log('Init the game');
-	};
 
 	return {
 		'init': init
