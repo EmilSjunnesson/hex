@@ -38,7 +38,7 @@ hex.Game = (function(){
 		//TODO setup music
 		
 		updateUI(getActiveCards(12));
-		
+
 		//TODO start timebonus timer
 		
 		console.log('Game started');
@@ -115,7 +115,7 @@ hex.Game = (function(){
 		while (nbrOfSets <= 0) {
 			console.log("Inget SET");
 			removeFromActive();
-			shuffle(deck);
+			deck = shuffle(deck);
 			placeCardsOnTable(12);
 			checkForSet();
 		};
@@ -123,7 +123,8 @@ hex.Game = (function(){
 	
 	// remove all active cards an place them back in deck
 	function removeFromActive() {
-		for (var i = 0; i < activeCards.length; i++) {
+		var loops = activeCards.length;
+		for (var i = 0; i < loops; i++) {
 			deck[deck.length] = activeCards.shift();
 		}
 	}
@@ -144,7 +145,7 @@ hex.Game = (function(){
 	function isSetOnTable(card1, card2, card3) {
 		if (isSet(card1, card2, card3)) {
 			nbrOfSets++;
-			console.log("Index of SET:" + (card1.index + 1) + " | "
+			console.log("Index of SET: " + (card1.index + 1) + " | "
 			+ (card2.index + 1) + " | " + (card3.index + 1));
 			hintIndex1 = card1.index;
 			hintIndex2 = card2.index;
@@ -170,10 +171,15 @@ hex.Game = (function(){
 	// checks all cards on table for sets
 	function checkForSet() {
 		nbrOfSets = 0;
-		for (var i = 0; i < 3; i++) {
-			for (var j = 0; j < 3; j++) {
-				for (var k = 0; k < 3; k++) {
-					isSetOnTable(activeCards[i], activeCards[j], activeCards[k]);
+		for (var i = 0; i < maxOnTable; i++) {
+			for (var j = 0; j < maxOnTable; j++) {
+				for (var k = 0; k < maxOnTable; k++) {
+					if(!areEqual(i, j, k)) {
+						isSetOnTable(activeCards[i], activeCards[j], activeCards[k]);
+						
+						// FEL I DENNA FUNKTIONEN
+						
+					}
 				}
 				
 			}
