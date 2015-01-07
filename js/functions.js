@@ -13,7 +13,7 @@ function isEmpty(array){
 	}
 }
 
-//check if any number of values are equal
+// Check if any number of values are equal
 function areEqual(){
 	var len = arguments.length;
 	for (var i = 1; i< len; i++){
@@ -23,3 +23,25 @@ function areEqual(){
 	}
 	return true;
 }
+
+// http://www.mennovanslooten.nl/blog/post/51
+// Extends array to create an array of all posible combinations
+Array.prototype.combinate = function( iItems, aIn ) {
+    if (!aIn) {
+        var aIn = new Array();
+        this.combinate.aResult = new Array();
+    }
+    
+    for(var i = 0; i < this.length; i++) {
+        var a = aIn.concat(this[i]);
+        var aRest = this.concat(); // Concat with nothing to create copy
+        aRest.splice(0, i + 1);
+        
+        if(iItems && iItems - 1 <= aRest.length) {
+            aRest.combinate(iItems - 1, a);
+            if(iItems == 1) this.combinate.aResult.push(a);
+        }
+    }
+    
+    return this.combinate.aResult;
+};

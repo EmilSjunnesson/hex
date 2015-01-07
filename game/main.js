@@ -2,11 +2,12 @@ window.hex = window.hex || { };
 
 $(document).ready(function(){
 	
+	// Initiate game
 	hex.Game.init();
 	
+	// Pressed card
 	$('.card').click(function() {
-		$(this).toggleClass('selected');
-		console.log($(this).prop('id'));
+		hex.Game.clickedCard($(this).prop('id').replace('card', ''));
 	});
 	
 });
@@ -44,7 +45,151 @@ hex.Game = (function(){
 		console.log('Game started');
 	};
 	
-	// update cards(divs) and text
+	// Function executed on card click
+	function clickedCard(id) {
+		toggleState(id);
+		if (pressedCount === 1) {
+			compareCard1 = currCard;
+			if (lastIndexState) {
+				lastIndex = currCard.index;
+				lastIndexState = false;
+			}
+		} else if (pressedCount === 2) {
+			compareCard2 = currCard;
+		} else if (pressedCount === 3) {
+			compareCard3 = currCard;
+			checkSelection();
+		}
+	}
+	
+	// Cards works as togglebuttons
+	function toggleState(pos) {
+		toggle[pos] = !toggle[pos];
+		if (toggle[pos] == true) {
+			//selectedImg[pos].setVisibility(View.VISIBLE);
+			//select_Anim[pos].stop();
+			//select_Anim[pos].start();
+			$('#card' + pos).addClass('selected');
+			// *** change card to selected, maybe animation
+			currCard = activeCards[pos];
+			//selectSound.seekTo(0);
+			//selectSound.start();
+			// *** play select music
+			pressedCount++;
+		} else if (toggle[pos] == false) {
+			//selectedImg[pos].setVisibility(View.INVISIBLE);
+			$('#card' + pos).removeClass('selected');
+			// *** change card to unselected visibilty
+			currCard = activeCards[lastIndex];
+			pressedCount--;
+		}
+	}
+	
+	// Resets frames and selection logic
+	function resetSelect() {
+		for (var i = 0; i < toggle.length; i++) {
+			toggle[i] = false;
+		}
+		//selectedImg[i].setVisibility(View.INVISIBLE);
+		$('.card').removeClass('selected');
+		// *** change card to unselected visibilty
+		pressedCount = 0;
+		lastIndexState = true;
+	}
+	
+	// Runs when three cards has been selected
+	function checkSelection() {
+		set = isSet(compareCard1, compareCard2, compareCard3);
+		if (set == true) {
+			gamestarted = false;
+			//for (var i = 0; i < hintView.length; i++) {
+				//hintView[i].setVisibility(View.INVISIBLE);
+				//hintView[i].clearAnimation();
+			//}
+			// *** clear hint-visuals
+			
+			//scoreClass.killOldTimer();
+			//scoreClass.add1000Points();
+			//scoreClass.startComboTimer();
+			// *** kill and start timers (add points) 
+			
+			
+			//setsound.seekTo(0);
+			//setsound.start();
+			// *** Set audio
+			
+			// Add the score you get to the total score
+			//score = score + scoreClass.getPoints();
+			// *** adda poäng
+			
+			if (!isEmpty(deck)) {
+				// Show custom toast based on points you get from your set
+				//if (scoreClass.getPoints() == 1000) {
+					//toast1000.show();
+				//}
+				//if (scoreClass.getPoints() == 1500) {
+					//toast1500.show();
+				//}
+				//if (scoreClass.getPoints() == 2000) {
+					//toast2000.show();
+				//}
+				//if (scoreClass.getPoints() == 3000) {
+					//toast3000.show();
+				//}
+				//if (scoreClass.getPoints() == 5000) {
+					//toast5000.show();
+				//}
+				//if (scoreClass.getPoints() == 10000) {
+					//toast10000.show();
+				//}
+				// *** Show popup div med poäng
+			}
+			
+			// Start timeglass animation, and if it is running; restart it
+			//if (timeglassAnimation.isRunning()) {
+				//timeglassAnimation.stop();
+			//}
+			//timeglassAnimation.start();
+			// *** Start timeglass/stop first
+			
+			//highscore.setText(Integer.toString(score));
+			// *** Change score text (in upper left corner
+			
+			//scoreClass.clearAll();
+			// *** Cleara poäng klassen
+			
+			if (!isEmpty(deck)) {
+				updateUI(getNewCards(compareCard1.index, compareCard2.index, compareCard3.index));
+			} else if (isEmpty(deck)) {
+				win();
+				//timebonusTimerClass.killTimebonusTimer();
+				// Destroy bonus timer
+			}
+			set = false;
+		} else if (set == false) {
+			//vib.vibrate(400);
+			//nosetsound.seekTo(0);
+			//nosetsound.start();
+			// *** indicate noSet, ljud, visuellt
+		}
+		resetSelect();
+	}
+	
+	// Run when there's not card left in deck
+	function win() {
+		//Intent showScoreIntent = new Intent(getApplicationContext(),
+		//ShowScore.class);
+		//showScoreIntent.putExtra("score", score);
+		//showScoreIntent.putExtra("Timebonus", timebonusTimerClass.getTimebonus());
+		//startActivity(showScoreIntent);
+		//finish();
+		
+		// *** stop timers, show score (in dialog?) and redirect with post score
+		// fast i show score så kanske det finns logik till att testa så man platsar i highscore?
+		// ikke att förglömma timebonus!
+	}
+	
+	// Update cards(divs) and text
 	function updateUI(activeCards) {
 		for (var i = 0; i < maxOnTable; i++) {
 			//add image to card
@@ -101,8 +246,8 @@ hex.Game = (function(){
 	function getNewCards(card1Index, card2Index, card3Index) {
 		var indexes = [card1Index, card2Index, card3Index];
 		for (var i = 0; i < indexes.length; i++) {
-			activeCards[i] = deck.shift();
-			activeCards[i].index = i;
+			activeCards[indexes[i]] = deck.shift();
+			activeCards[indexes[i]].index = indexes[i];
 		}
 		console.log("Kort kvar i deck: " + deck.length);
 		checkAndRedeal();
@@ -171,24 +316,20 @@ hex.Game = (function(){
 	// checks all cards on table for sets
 	function checkForSet() {
 		nbrOfSets = 0;
-		for (var i = 0; i < maxOnTable; i++) {
-			for (var j = 0; j < maxOnTable; j++) {
-				for (var k = 0; k < maxOnTable; k++) {
-					if(!areEqual(i, j, k)) {
-						isSetOnTable(activeCards[i], activeCards[j], activeCards[k]);
-						
-						// FEL I DENNA FUNKTIONEN
-						
-					}
-				}
-				
-			}
+		
+		var slots = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
+		var combinations = slots.combinate(3);
+		
+		for (var i = 0; i < combinations.length; i++) {
+			var cards = combinations[i];
+			isSetOnTable(activeCards[cards[0]], activeCards[cards[1]], activeCards[cards[2]]);
 		}
 		console.log("SET i kort: " + nbrOfSets);
 	}
 
 	return {
-		'init': init
+		'init': init,
+		'clickedCard' : clickedCard
 	};
 })();
 

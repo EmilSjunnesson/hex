@@ -1,0 +1,1 @@
+window.hex = window.hex || { };
