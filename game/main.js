@@ -33,14 +33,24 @@ hex.Game = (function(){
 	lastIndexState = true,
 	maxOnTable = 12;
 	
+	// Audio vars
+	var noSetSound, setSound, bgMusic;
+	
 	// Initiates the game
 	var init = function() {
 		
-		//TODO setup music
+		// Setup sound
+		noSetSound = new Audio('../sound/noset.ogg');
+		setSound = new Audio('../sound/set.ogg');
+		bgMusic = new Audio('../sound/mainmusic.mp3');
+		bgMusic.loop = true;
+		bgMusic.volume = 0.1;
+		bgMusic.play();
 		
 		updateUI(getActiveCards(12));
 
-		//TODO start timebonus timer
+		// Start timebonus timer
+		hex.Timers.startTimeBonusTimer();
 		
 		console.log('Game started');
 	};
@@ -72,9 +82,6 @@ hex.Game = (function(){
 			$('#card' + pos).addClass('selected');
 			// *** change card to selected, maybe animation
 			currCard = activeCards[pos];
-			//selectSound.seekTo(0);
-			//selectSound.start();
-			// *** play select music
 			pressedCount++;
 		} else if (toggle[pos] == false) {
 			//selectedImg[pos].setVisibility(View.INVISIBLE);
@@ -111,15 +118,23 @@ hex.Game = (function(){
 			//scoreClass.killOldTimer();
 			//scoreClass.add1000Points();
 			//scoreClass.startComboTimer();
+			console.log(hex.Timers.getPoints());
+			hex.Timers.killComboTimer();
+			console.log(hex.Timers.getPoints());
+			hex.Timers.add1000Points();
+			console.log(hex.Timers.getPoints());
+			hex.Timers.startComboTimer();
+			console.log(hex.Timers.getPoints());
 			// *** kill and start timers (add points) 
-			
 			
 			//setsound.seekTo(0);
 			//setsound.start();
+			setSound.play();
 			// *** Set audio
 			
 			// Add the score you get to the total score
 			//score = score + scoreClass.getPoints();
+			score = score + hex.Timers.getPoints();
 			// *** adda poäng
 			
 			if (!isEmpty(deck)) {
@@ -142,7 +157,29 @@ hex.Game = (function(){
 				//if (scoreClass.getPoints() == 10000) {
 					//toast10000.show();
 				//}
+				console.log('Du fick ' + hex.Timers.getPoints() + ' poäng');
+				switch (hex.Timers.getPoints()) {
+				case 1000:
+					console.log('Du fick ' + hex.Timers.getPoints() + ' poäng');
+					break;
+				case 1500:
+					console.log('Du fick ' + hex.Timers.getPoints() + ' poäng');
+					break;
+				case 2000:
+					console.log('Du fick ' + hex.Timers.getPoints() + ' poäng');
+					break;
+				case 3000:
+					console.log('Du fick ' + hex.Timers.getPoints() + ' poäng');
+					break;
+				case 5000:
+					console.log('Du fick ' + hex.Timers.getPoints() + ' poäng');
+					break;
+				case 10000:
+					console.log('Du fick ' + hex.Timers.getPoints() + ' poäng');
+					break;
+				}
 				// *** Show popup div med poäng
+				//TODO POPUP DIV
 			}
 			
 			// Start timeglass animation, and if it is running; restart it
@@ -156,21 +193,20 @@ hex.Game = (function(){
 			// *** Change score text (in upper left corner
 			
 			//scoreClass.clearAll();
+			hex.Timers.clearAll();
 			// *** Cleara poäng klassen
 			
 			if (!isEmpty(deck)) {
 				updateUI(getNewCards(compareCard1.index, compareCard2.index, compareCard3.index));
 			} else if (isEmpty(deck)) {
 				win();
-				//timebonusTimerClass.killTimebonusTimer();
-				// Destroy bonus timer
+				// Stop timebouns timer
+				hex.Timers.killTimeBonusTimer();
 			}
 			set = false;
 		} else if (set == false) {
-			//vib.vibrate(400);
-			//nosetsound.seekTo(0);
-			//nosetsound.start();
-			// *** indicate noSet, ljud, visuellt
+			noSetSound.play();
+			//TODO *** indicate noSet, ljud, visuellt
 		}
 		resetSelect();
 	}
@@ -184,7 +220,9 @@ hex.Game = (function(){
 		//startActivity(showScoreIntent);
 		//finish();
 		
-		// *** stop timers, show score (in dialog?) and redirect with post score
+		var timeBonus = hex.Timers.timeBonus;
+		
+		// *** Show score (in dialog?) and redirect with post score
 		// fast i show score så kanske det finns logik till att testa så man platsar i highscore?
 		// ikke att förglömma timebonus!
 	}
@@ -220,6 +258,12 @@ hex.Game = (function(){
 //			}
 //			});
 		};
+	}
+	
+	// Showing hints called from timers
+	function showHint(hintNbr) {
+		console.log('Showing ' + hintNbr + ' hint');
+		//TODO hint visuals
 	}
   
 	// Creates deck and places 12 cards in active
@@ -329,7 +373,8 @@ hex.Game = (function(){
 
 	return {
 		'init': init,
-		'clickedCard' : clickedCard
+		'clickedCard' : clickedCard,
+		'showHint' : showHint
 	};
 })();
 
