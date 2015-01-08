@@ -240,4 +240,29 @@ body{
 	.clearfix();
 	width: 960px;
 	height: 600px;
+	position: relative;
+}
+
+/** --------------------------------------------------------------
+ * Board layout.
+ * 
+ */
+input#un-mute {
+    display: none;
+}
+
+.unmute img {
+    display: none;
+}
+
+.unmute img, .mute img {
+    cursor: pointer;
+}
+
+input#un-mute:checked ~ .unmute img {
+    display: initial;
+}
+
+input#un-mute:checked ~ .mute img {
+    display: none;
 }
