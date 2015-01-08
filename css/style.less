@@ -163,7 +163,6 @@ tfoot{font-style:italic;}
           transform: @functions;
 }
 
-
 /** --------------------------------------------------------------
  * Colors.
  * 
@@ -241,6 +240,7 @@ body{
 	width: 960px;
 	height: 600px;
 	position: relative;
+	z-index: 0;
 }
 
 /** --------------------------------------------------------------
@@ -265,4 +265,48 @@ input#un-mute:checked ~ .unmute img {
 
 input#un-mute:checked ~ .mute img {
     display: none;
+}
+
+/** --------------------------------------------------------------
+ * Candle animation.
+ * 
+ */
+#candles {
+    width: 960px;
+    height: 600px;
+  	position: absolute;
+  	z-index: -1;
+    background-image: url("../img/sprites/candle-sprite.png");
+    
+    -webkit-animation: play .8s steps(6) infinite;
+       -moz-animation: play .8s steps(6) infinite;
+        -ms-animation: play .8s steps(6) infinite;
+         -o-animation: play .8s steps(6) infinite;
+            animation: play .8s steps(6) infinite;
+}
+
+ 
+@-webkit-keyframes play {
+   from { background-position:    0px; }
+     to { background-position: -5760px; }
+}
+
+@-moz-keyframes play {
+   from { background-position:    0px; }
+     to { background-position: -5760px; }
+}
+
+@-ms-keyframes play {
+   from { background-position:    0px; }
+     to { background-position: -5760px; }
+}
+
+@-o-keyframes play {
+   from { background-position:    0px; }
+     to { background-position: -5760px; }
+}
+
+@keyframes play {
+   from { background-position:    0px; }
+     to { background-position: -5760px; }
 }

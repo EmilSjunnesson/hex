@@ -7,6 +7,7 @@
 	<img src="http://upload.wikimedia.org/wikipedia/commons/2/21/Speaker_Icon.svg" alt="Speaker_Icon.svg" title="Unmute/speaker icon">
 </label>
 <div id="board">
+<div id="candles"></div>
 <div id="cards">
 <?php for ($i = 0; $i <12; $i++) : ?>
 <div id="card<?=$i?>" class="card"></div>
