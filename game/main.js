@@ -10,6 +10,11 @@ $(document).ready(function(){
 		hex.Game.clickedCard($(this).prop('id').replace('card', ''));
 	});
 	
+	// Pressed un-mute button
+	$('#un-mute').click(function() {
+		hex.Game.toggleAudio();
+	});
+	
 });
 
 /**
@@ -34,7 +39,8 @@ hex.Game = (function(){
 	maxOnTable = 12;
 	
 	// Audio vars
-	var noSetSound, setSound, bgMusic;
+	var noSetSound, setSound, bgMusic,
+	mute = false;
 	
 	// Initiates the game
 	var init = function() {
@@ -70,6 +76,12 @@ hex.Game = (function(){
 			compareCard3 = currCard;
 			checkSelection();
 		}
+	}
+	
+	// Toggle sound and music on/off
+	function toggleAudio() {
+		mute = !mute;
+		bgMusic.muted = mute;
 	}
 	
 	// Cards works as togglebuttons
@@ -115,27 +127,17 @@ hex.Game = (function(){
 			//}
 			// *** clear hint-visuals
 			
-			//scoreClass.killOldTimer();
-			//scoreClass.add1000Points();
-			//scoreClass.startComboTimer();
-			console.log(hex.Timers.getPoints());
+			// Reset timer
 			hex.Timers.killComboTimer();
-			console.log(hex.Timers.getPoints());
 			hex.Timers.add1000Points();
-			console.log(hex.Timers.getPoints());
 			hex.Timers.startComboTimer();
-			console.log(hex.Timers.getPoints());
-			// *** kill and start timers (add points) 
 			
-			//setsound.seekTo(0);
-			//setsound.start();
-			setSound.play();
-			// *** Set audio
+			if(!mute) {
+				setSound.play();
+			}
 			
 			// Add the score you get to the total score
-			//score = score + scoreClass.getPoints();
 			score = score + hex.Timers.getPoints();
-			// *** adda poäng
 			
 			if (!isEmpty(deck)) {
 				// Show custom toast based on points you get from your set
@@ -192,9 +194,7 @@ hex.Game = (function(){
 			//highscore.setText(Integer.toString(score));
 			// *** Change score text (in upper left corner
 			
-			//scoreClass.clearAll();
 			hex.Timers.clearAll();
-			// *** Cleara poäng klassen
 			
 			if (!isEmpty(deck)) {
 				updateUI(getNewCards(compareCard1.index, compareCard2.index, compareCard3.index));
@@ -205,7 +205,9 @@ hex.Game = (function(){
 			}
 			set = false;
 		} else if (set == false) {
-			noSetSound.play();
+			if(!mute) {
+				noSetSound.play();
+			}
 			//TODO *** indicate noSet, ljud, visuellt
 		}
 		resetSelect();
@@ -374,7 +376,8 @@ hex.Game = (function(){
 	return {
 		'init': init,
 		'clickedCard' : clickedCard,
-		'showHint' : showHint
+		'showHint' : showHint,
+		'toggleAudio' : toggleAudio
 	};
 })();
 
