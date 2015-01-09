@@ -2,6 +2,10 @@ window.hex = window.hex || { };
 
 $(document).ready(function(){
 	
+	// Hide popups
+	$('.popup').hide();
+	$('#overlay').hide();
+	
 	// Initiate game
 	hex.Game.init();
 	
@@ -13,6 +17,20 @@ $(document).ready(function(){
 	// Pressed un-mute button
 	$('#un-mute').click(function() {
 		hex.Game.toggleAudio();
+	});
+	
+	// Menu div
+	$('#menu-button').click(function() {
+		$('#overlay')
+		.show()
+		.css('top', 0)
+	    .css('opacity', '0')
+	    .animate({'opacity': '0.5'}, 'slow');
+		$('#menu-popup').fadeIn();
+	});
+	$('#no').click(function() {
+		$('#menu-popup').fadeOut();
+		$('#overlay').fadeOut();
 	});
 	
 });

@@ -250,7 +250,7 @@ body{
 }
 
 /** --------------------------------------------------------------
- * Mute button style.
+ * Mute button style. + menu button
  * 
  */
 input#un-mute {
@@ -278,6 +278,15 @@ input#un-mute:checked ~ .mute img {
     display: none;
 }
 
+#menu-button {
+	cursor: pointer;
+    position: absolute;
+    z-index: 1;
+    right: 45px;
+    top: 7px;
+    width: 25px;
+}
+
 /** --------------------------------------------------------------
  * Score background and text style style.
  * 
@@ -299,7 +308,65 @@ input#un-mute:checked ~ .mute img {
 	font-size: 40px;
 	text-align: center;
 }  
+
+/** --------------------------------------------------------------
+ * Popups
+ * 
+ */
+.popup {
+	position: absolute;
+}
+
+#score-popup {
+
+}
+
+#menu-popup {
+	background-image: url('../img/backdrop.png');
+	width: 400px;
+	height: 228px;
+	left: 280px;
+	top: 172px;
+	text-align: center;
+	font-family: black;
+	font-size: x-large;
+	
+	p {
+		margin-top: 40px;
+		margin-bottom: 10px;
+	}
+	
+	button {
+		width: 58px;
+		height: 36px;
+		border: 0;
+		cursor: pointer;
+	}
+	
+	#yes {
+		background-image: url('../img/yes.png');
+	}
+	#yes:hover {
+		background-image: url('../img/yes_pressed.png');
+	}
+	
+	#no {
+		background-image: url('../img/no.png');
+	}
+	#no:hover {
+		background-image: url('../img/no_pressed.png');
+	}
+} 
  
+#overlay {
+  	position: absolute;
+  	top:0;
+  	left:0;
+  	height: 600px;
+  	width: 960px;
+  	background:black;
+}
+  
 /** --------------------------------------------------------------
  * Candle animation.
  * 
