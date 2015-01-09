@@ -1,6 +1,12 @@
 /**
  * Style with LESS.
  */
+ 
+@font-face {
+	font-family: black;
+	src: url('../font/blackmoor.woff');
+}
+ 
 
 /** --------------------------------------------------------------
  * Reset. http://meyerweb.com/eric/tools/css/reset/ v2.0 | 20110126
@@ -257,6 +263,11 @@ input#un-mute {
 
 .unmute img, .mute img {
     cursor: pointer;
+    position: absolute;
+    z-index: 1;
+    right: 10px;
+    top: 10px;
+    width: 25px;
 }
 
 input#un-mute:checked ~ .unmute img {
@@ -267,6 +278,28 @@ input#un-mute:checked ~ .mute img {
     display: none;
 }
 
+/** --------------------------------------------------------------
+ * Score background and text style style.
+ * 
+ */
+#score-bg {
+	position:absolute;
+	width: 250px;
+	left: -10px;
+	top: 10px;
+} 
+
+#score-text {
+	position:absolute;
+	width: 250px;
+	left: -7px;
+	top: 15px;
+	color: #F0EAD6;
+	font-family: black !important;
+	font-size: 40px;
+	text-align: center;
+}  
+ 
 /** --------------------------------------------------------------
  * Candle animation.
  * 

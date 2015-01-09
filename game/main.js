@@ -191,8 +191,8 @@ hex.Game = (function(){
 			//timeglassAnimation.start();
 			// *** Start timeglass/stop first
 			
-			//highscore.setText(Integer.toString(score));
-			// *** Change score text (in upper left corner
+			// Update score text
+			$('#score-text').text(score);
 			
 			hex.Timers.clearAll();
 			
