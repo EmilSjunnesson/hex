@@ -72,6 +72,8 @@ hex.Game = (function(){
 		$('#overlay').hide();
 		
 		updateUI(getActiveCards(12));
+		
+		//TODO kanske ska sätta checked på mute
 
 		// Start timebonus timer
 		hex.Timers.startTimeBonusTimer();
@@ -236,8 +238,11 @@ hex.Game = (function(){
 	
 	// Showing hints called from timers
 	function showHint(hintNbr) {
-		console.log('Showing ' + hintNbr + ' hint');
-		//TODO hint visuals
+		if(hintNbr === 1) {
+			$('#card' + hintIndex1).css('background-image', 'url("../img/highlight.png"), url("' + activeCards[hintIndex1].imgSrc + '")');
+		} else if(hintNbr === 2) {
+			$('#card' + hintIndex2).css('background-image', 'url("../img/highlight.png"), url("' + activeCards[hintIndex2].imgSrc + '")');
+		}
 	}
   
 	// Creates deck and places 12 cards in active
@@ -266,10 +271,18 @@ hex.Game = (function(){
 		for (var i = 0; i < indexes.length; i++) {
 			activeCards[indexes[i]] = deck.shift();
 			activeCards[indexes[i]].index = indexes[i];
-			//TODO SLID IN CARDS kanske ge dem en klass?
-			//$('#card'+indexes[i]).css('visibility','hidden');
-			//$('#card'+indexes[i]).delay(400*i).slideDown(300);
+			// Animate in new cards
+			$('#card'+indexes[i]).addClass('swap');
 		}
+		// Animate in new cards
+		$('.swap').css({'opacity': '0'});
+		setTimeout(function() {
+			$('.swap').animate({
+				'opacity': '1'
+			}, 2000, function() {
+				$(this).removeClass('swap');
+			});
+		}, 1000);
 		console.log("Kort kvar i deck: " + deck.length);
 		checkAndRedeal();
 		return activeCards; //onödig return
@@ -314,7 +327,12 @@ hex.Game = (function(){
 			console.log("Index of SET: " + (card1.index + 1) + " | "
 			+ (card2.index + 1) + " | " + (card3.index + 1));
 			hintIndex1 = card1.index;
-			hintIndex2 = card2.index;
+			// Random hints to not make it to predictable
+			if(Math.random() > 0.5) {
+				hintIndex2 = card2.index;
+			} else {
+				hintIndex2 = card3.index;
+			}
 		}
 	}
 	
