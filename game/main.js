@@ -165,6 +165,7 @@ hex.Game = (function(){
 			//if (timeglassAnimation.isRunning()) {
 				//timeglassAnimation.stop();
 			//}
+			// TODO TIMEGLASS START/STOP
 			//timeglassAnimation.start();
 			// *** Start timeglass/stop first
 			
@@ -185,9 +186,7 @@ hex.Game = (function(){
 			if(!mute) {
 				noSetSound.play();
 			}
-			//TODO *** indicate noSet, ljud, visuellt
 			$('#card' + compareCard1.index + ', #card'+ compareCard2.index + ', #card' + compareCard3.index).effect('shake');
-			//compareCard1, compareCard2, compareCard3
 		}
 		resetSelect();
 	}
@@ -200,10 +199,11 @@ hex.Game = (function(){
 		//showScoreIntent.putExtra("Timebonus", timebonusTimerClass.getTimebonus());
 		//startActivity(showScoreIntent);
 		//finish();
-		
+		var redirect = '../score/index.php';
+		$.redirectPost(redirect, {score: String(score), timeBonus: String(hex.Timers.getTimeBonus())});
 		
 		//TODO REDIRECT
-		var timeBonus = hex.Timers.timeBonus;
+		//var timeBonus = hex.Timers.timeBonus;
 		
 		// *** Show score (in dialog?) and redirect with post score
 		// fast i show score så kanske det finns logik till att testa så man platsar i highscore?
@@ -274,6 +274,7 @@ hex.Game = (function(){
 			activeCards[indexes[i]].index = indexes[i];
 			// Animate in new cards
 			$('#card'+indexes[i]).addClass('swap');
+			//TODO BETTER ANIMATION
 		}
 		// Animate in new cards
 		$('.swap').css({'opacity': '0'});
@@ -371,7 +372,8 @@ hex.Game = (function(){
 		'init': init,
 		'clickedCard' : clickedCard,
 		'showHint' : showHint,
-		'toggleAudio' : toggleAudio
+		'toggleAudio' : toggleAudio,
+		'win' : win //TODO REMOVE WIN
 	};
 })();
 
