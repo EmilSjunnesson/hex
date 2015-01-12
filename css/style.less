@@ -318,7 +318,10 @@ input#un-mute:checked ~ .mute img {
 }
 
 #score-popup {
-
+	width: 960px;
+	height: 600px;
+	background-image: url('../img/popups/set1000.png');
+	background-size: cover;
 }
 
 #menu-popup {
@@ -409,4 +412,18 @@ input#un-mute:checked ~ .mute img {
 @keyframes play {
    from { background-position:    0px; }
      to { background-position: -5760px; }
+}
+
+/** --------------------------------------------------------------
+ * Timeglass animation.
+ * 
+ */
+#timeglass {
+    width: 107px;
+    height: 144px;
+  	position: absolute;
+  	right: 65px;
+  	bottom: 20px;
+  	z-index: -1;
+    background-image: url("../img/sprites/timeglass.png");
 }

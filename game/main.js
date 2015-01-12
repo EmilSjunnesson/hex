@@ -2,10 +2,6 @@ window.hex = window.hex || { };
 
 $(document).ready(function(){
 	
-	// Hide popups
-	$('.popup').hide();
-	$('#overlay').hide();
-	
 	// Initiate game
 	hex.Game.init();
 	
@@ -70,6 +66,10 @@ hex.Game = (function(){
 		bgMusic.loop = true;
 		bgMusic.volume = 0.1;
 		bgMusic.play();
+		
+		// Hide popups
+		$('.popup').hide();
+		$('#overlay').hide();
 		
 		updateUI(getActiveCards(12));
 
@@ -157,49 +157,9 @@ hex.Game = (function(){
 			// Add the score you get to the total score
 			score = score + hex.Timers.getPoints();
 			
+			// Show custom toast based on points you get from your set
 			if (!isEmpty(deck)) {
-				// Show custom toast based on points you get from your set
-				//if (scoreClass.getPoints() == 1000) {
-					//toast1000.show();
-				//}
-				//if (scoreClass.getPoints() == 1500) {
-					//toast1500.show();
-				//}
-				//if (scoreClass.getPoints() == 2000) {
-					//toast2000.show();
-				//}
-				//if (scoreClass.getPoints() == 3000) {
-					//toast3000.show();
-				//}
-				//if (scoreClass.getPoints() == 5000) {
-					//toast5000.show();
-				//}
-				//if (scoreClass.getPoints() == 10000) {
-					//toast10000.show();
-				//}
-				console.log('Du fick ' + hex.Timers.getPoints() + ' poäng');
-				switch (hex.Timers.getPoints()) {
-				case 1000:
-					console.log('Du fick ' + hex.Timers.getPoints() + ' poäng');
-					break;
-				case 1500:
-					console.log('Du fick ' + hex.Timers.getPoints() + ' poäng');
-					break;
-				case 2000:
-					console.log('Du fick ' + hex.Timers.getPoints() + ' poäng');
-					break;
-				case 3000:
-					console.log('Du fick ' + hex.Timers.getPoints() + ' poäng');
-					break;
-				case 5000:
-					console.log('Du fick ' + hex.Timers.getPoints() + ' poäng');
-					break;
-				case 10000:
-					console.log('Du fick ' + hex.Timers.getPoints() + ' poäng');
-					break;
-				}
-				// *** Show popup div med poäng
-				//TODO POPUP DIV
+				showScorePopup(hex.Timers.getPoints());
 			}
 			
 			// Start timeglass animation, and if it is running; restart it
@@ -253,31 +213,25 @@ hex.Game = (function(){
 			//add image to card
 			$('#card' + i).css('background-image', 'url(' + activeCards[i].imgSrc + ')');
 		}
-		if (newSet == true) {
-			for (var i = 0; i < maxOnTable; i++) {
-				//iv[i].startAnimation(placeCards[i]);
-			}
+		if (newSet === true) {
+			// Animate in new cards
+			$('.card').hide();
+			$('.card').each(function(index) {
+			    $(this).delay(400*index).slideDown(300);
+			});
 			newSet = false;
-		} else if (newSet == false) {
-			// Byta bild animation.
-//			iv[compareCard1.getIndex()].startAnimation(replaceCards[0]);
-//			iv[compareCard2.getIndex()].startAnimation(replaceCards[1]);
-//			iv[compareCard3.getIndex()].startAnimation(replaceCards[2]);
-//			replaceCards[2].setAnimationListener(new AnimationListener() {
-//			@Override
-//			public void onAnimationStart(Animation animation) {
-//			}
-//			@Override
-//			public void onAnimationRepeat(Animation animation) {
-//			}
-//			@Override
-//			public void onAnimationEnd(Animation animation) {
-//			iv[compareCard1.getIndex()].clearAnimation();
-//			iv[compareCard2.getIndex()].clearAnimation();
-//			iv[compareCard3.getIndex()].clearAnimation();
-//			}
-//			});
-		};
+		}
+	}
+	
+	function showScorePopup(score) {
+		$('#score-popup')
+		.css('background-image', 'url(../img/popups/set' + score + '.png)')
+		.fadeIn('slow', function() {
+			setTimeout(function() {
+				$('#score-popup').fadeOut('slow');
+			}, 1000);
+		});
+		
 	}
 	
 	// Showing hints called from timers
@@ -312,6 +266,9 @@ hex.Game = (function(){
 		for (var i = 0; i < indexes.length; i++) {
 			activeCards[indexes[i]] = deck.shift();
 			activeCards[indexes[i]].index = indexes[i];
+			//TODO SLID IN CARDS kanske ge dem en klass?
+			//$('#card'+indexes[i]).css('visibility','hidden');
+			//$('#card'+indexes[i]).delay(400*i).slideDown(300);
 		}
 		console.log("Kort kvar i deck: " + deck.length);
 		checkAndRedeal();

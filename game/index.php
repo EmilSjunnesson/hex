@@ -1,6 +1,7 @@
 <?php $title='Game'; include(__DIR__ . '/../incl/header.php'); ?>
 <div id="board">
 <div id="candles"></div>
+<div id="timeglass"></div>
 <div id="overlay"></div>
 <input type="checkbox" name="un-mute" id="un-mute">
 <label for="un-mute" class="unmute">
