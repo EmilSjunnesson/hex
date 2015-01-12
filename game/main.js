@@ -112,6 +112,7 @@ hex.Game = (function(){
 			//select_Anim[pos].stop();
 			//select_Anim[pos].start();
 			$('#card' + pos).addClass('selected');
+			//TODO SELECTED VISUALS
 			// *** change card to selected, maybe animation
 			currCard = activeCards[pos];
 			pressedCount++;
@@ -131,6 +132,7 @@ hex.Game = (function(){
 		}
 		//selectedImg[i].setVisibility(View.INVISIBLE);
 		$('.card').removeClass('selected');
+		//TODO UNSELECT
 		// *** change card to unselected visibilty
 		pressedCount = 0;
 		lastIndexState = true;
@@ -141,11 +143,6 @@ hex.Game = (function(){
 		set = isSet(compareCard1, compareCard2, compareCard3);
 		if (set == true) {
 			gamestarted = false;
-			//for (var i = 0; i < hintView.length; i++) {
-				//hintView[i].setVisibility(View.INVISIBLE);
-				//hintView[i].clearAnimation();
-			//}
-			// *** clear hint-visuals
 			
 			// Reset timer
 			hex.Timers.killComboTimer();
@@ -189,6 +186,8 @@ hex.Game = (function(){
 				noSetSound.play();
 			}
 			//TODO *** indicate noSet, ljud, visuellt
+			$('#card' + compareCard1.index + ', #card'+ compareCard2.index + ', #card' + compareCard3.index).effect('shake');
+			//compareCard1, compareCard2, compareCard3
 		}
 		resetSelect();
 	}
@@ -202,6 +201,8 @@ hex.Game = (function(){
 		//startActivity(showScoreIntent);
 		//finish();
 		
+		
+		//TODO REDIRECT
 		var timeBonus = hex.Timers.timeBonus;
 		
 		// *** Show score (in dialog?) and redirect with post score
