@@ -43,7 +43,9 @@ hex.Game = (function(){
 	
 	// Display vars
 	var currCard, comapareCard1, comapareCard2, comapareCard3,
-	set, lastIndex,
+	set, lastIndex, timeglass, 
+	timeglassIndex = 0,
+	delay = 50,
 	toggle = [],
 	pressedCount = 0,
 	newSet = true,
@@ -67,9 +69,8 @@ hex.Game = (function(){
 		bgMusic.volume = 0.1;
 		bgMusic.play();
 		
-		// Hide popups
-		$('.popup').hide();
-		$('#overlay').hide();
+		// Hide popups and timeglass
+		$('.popup, #overlay, #timeglass').hide();
 		
 		updateUI(getActiveCards(12));
 		
@@ -161,13 +162,9 @@ hex.Game = (function(){
 				showScorePopup(hex.Timers.getPoints());
 			}
 			
-			// Start timeglass animation, and if it is running; restart it
-			//if (timeglassAnimation.isRunning()) {
-				//timeglassAnimation.stop();
-			//}
-			// TODO TIMEGLASS START/STOP
-			//timeglassAnimation.start();
-			// *** Start timeglass/stop first
+			// Resets timeglass animation
+			stopTimeglass();
+			startTimeglass();
 			
 			// Update score text
 			$('#score-text').text(score);
@@ -366,6 +363,56 @@ hex.Game = (function(){
 			isSetOnTable(activeCards[cards[0]], activeCards[cards[1]], activeCards[cards[2]]);
 		}
 		console.log("SET i kort: " + nbrOfSets);
+	}
+	
+	// Start timeglass-animation
+	function startTimeglass() {
+		$('#timeglass').fadeIn(2000, function() {
+			timeglass = setTimeout(function() {
+				timeglassFunction();
+			}, 50);
+		});
+	}
+	
+	function timeglassFunction() {
+		// faster framerate at beggining and end
+			if(timeglassIndex < 120) {
+				timeglassIndex++;
+				if(timeglassIndex < 10) {
+					delay = 50;
+				} else if(timeglassIndex < 28) {
+					delay = 100;
+				} else if(timeglassIndex < 43) {
+					delay = 550;
+				} else if(timeglassIndex < 49) {
+					delay = 650;
+				} else if(timeglassIndex < 69) {
+					delay = 750;
+				} else if(timeglassIndex < 90) {
+					delay = 700;
+				} else if(timeglassIndex < 99) {
+					delay = 600;
+				} else if(timeglassIndex < 115) {
+					delay = 500;
+				} else if(timeglassIndex < 116) {
+					delay = 400;
+				} else {
+					delay = 100;
+				}
+				$("#timeglass").css('background-position', '0px -' + (144 * timeglassIndex) + 'px');
+				timeglass = setTimeout(function() {
+					timeglassFunction();
+				}, delay);
+			}
+	}
+	
+	// Stop timeglass-animation
+	function stopTimeglass() {
+		if(typeof timeglass !== 'undefined') {
+			clearTimeout(timeglass);
+			timeglassIndex = 0;
+			$('#timeglass').hide();
+		}
 	}
 
 	return {
