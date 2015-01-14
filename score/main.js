@@ -18,6 +18,8 @@ $(document).ready(function(){
    $('#finalScore').text(finalScore);
    
    //TODO kolla om nytt highscore annars alternativ spela igen / till menu
+   // HÄMTA HIGHSCORE FRÅN DATABASEN NÄR SIDAN LADDAS
+   // LÄGG SEDAN IN DET I I JS KODEN 
 });
 
 //get final score from time and score
