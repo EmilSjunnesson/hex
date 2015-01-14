@@ -70,11 +70,9 @@ hex.Game = (function(){
 		bgMusic.play();
 		
 		// Hide popups and timeglass
-		$('.popup, #overlay, #timeglass').hide();
+		$('.popup, #overlay, #timeglass, .card img').hide();
 		
 		updateUI(getActiveCards(12));
-		
-		//TODO kanske ska sätta checked på mute
 
 		// Start timebonus timer
 		hex.Timers.startTimeBonusTimer();
@@ -109,18 +107,11 @@ hex.Game = (function(){
 	function toggleState(pos) {
 		toggle[pos] = !toggle[pos];
 		if (toggle[pos] == true) {
-			//selectedImg[pos].setVisibility(View.VISIBLE);
-			//select_Anim[pos].stop();
-			//select_Anim[pos].start();
-			$('#card' + pos).addClass('selected');
-			//TODO SELECTED VISUALS
-			// *** change card to selected, maybe animation
+			$('#card' + pos + ' img').fadeIn('fast');
 			currCard = activeCards[pos];
 			pressedCount++;
 		} else if (toggle[pos] == false) {
-			//selectedImg[pos].setVisibility(View.INVISIBLE);
-			$('#card' + pos).removeClass('selected');
-			// *** change card to unselected visibilty
+			$('#card' + pos + ' img').fadeOut('fast');
 			currCard = activeCards[lastIndex];
 			pressedCount--;
 		}
@@ -131,10 +122,7 @@ hex.Game = (function(){
 		for (var i = 0; i < toggle.length; i++) {
 			toggle[i] = false;
 		}
-		//selectedImg[i].setVisibility(View.INVISIBLE);
-		$('.card').removeClass('selected');
-		//TODO UNSELECT
-		// *** change card to unselected visibilty
+		$('.card img').fadeOut('fast');
 		pressedCount = 0;
 		lastIndexState = true;
 	}
@@ -190,21 +178,19 @@ hex.Game = (function(){
 	
 	// Run when there's not card left in deck
 	function win() {
-		//Intent showScoreIntent = new Intent(getApplicationContext(),
-		//ShowScore.class);
-		//showScoreIntent.putExtra("score", score);
-		//showScoreIntent.putExtra("Timebonus", timebonusTimerClass.getTimebonus());
-		//startActivity(showScoreIntent);
-		//finish();
-		var redirect = '../score/index.php';
-		$.redirectPost(redirect, {score: String(score), timeBonus: String(hex.Timers.getTimeBonus())});
-		
-		//TODO REDIRECT
-		//var timeBonus = hex.Timers.timeBonus;
-		
-		// *** Show score (in dialog?) and redirect with post score
-		// fast i show score så kanske det finns logik till att testa så man platsar i highscore?
-		// ikke att förglömma timebonus!
+		$('.card').fadeOut(1500);
+		$("#score-bg").animate({
+		    left: $("#score-bg").parent().width() / 2 - $("#score-bg").width() / 2,
+		    top: $("#score-bg").parent().height() / 2 - $("#score-bg").height() / 2
+		}, 2000);
+		$("#score-text").animate({
+		    left: $("#score-text").parent().width() / 2 - $("#score-text").width() / 2,
+		    top: $("#score-text").parent().height() / 2 - $("#score-text").height() / 2
+		}, 2000, function() {
+			setTimeout(function() {
+				$.redirectPost('../score/index.php', {score: String(score), timeBonus: String(hex.Timers.getTimeBonus())});
+			}, 1000);
+		});
 	}
 	
 	// Update cards(divs) and text
@@ -260,7 +246,7 @@ hex.Game = (function(){
 	function getActiveCards(cardsNeeded) {
 		placeCardsOnTable(cardsNeeded);
 		checkAndRedeal();
-		return activeCards; //onödig return?
+		return activeCards;
 	}
 	
 	// take cards from deck and place them in active cards
@@ -271,7 +257,6 @@ hex.Game = (function(){
 			activeCards[indexes[i]].index = indexes[i];
 			// Animate in new cards
 			$('#card'+indexes[i]).addClass('swap');
-			//TODO BETTER ANIMATION
 		}
 		// Animate in new cards
 		$('.swap').css({'opacity': '0'});
@@ -284,19 +269,24 @@ hex.Game = (function(){
 		}, 1000);
 		console.log("Kort kvar i deck: " + deck.length);
 		checkAndRedeal();
-		return activeCards; //onödig return
+		return activeCards;
 	}
 	
 	// check active cards for set and re-deal if needed
 	function checkAndRedeal() {
+		var attempts = 0;
 		checkForSet();
-		while (nbrOfSets <= 0) {
+		while (nbrOfSets <= 0 && attempts < 30) {
 			console.log("Inget SET");
 			removeFromActive();
 			deck = shuffle(deck);
 			placeCardsOnTable(12);
 			checkForSet();
+			attempts++;
 		};
+		if(attempts >= 30) {
+			win();
+		}
 	}
 	
 	// remove all active cards an place them back in deck
@@ -411,7 +401,6 @@ hex.Game = (function(){
 		if(typeof timeglass !== 'undefined') {
 			clearTimeout(timeglass);
 			timeglassIndex = 0;
-			$('#timeglass').hide();
 		}
 	}
 

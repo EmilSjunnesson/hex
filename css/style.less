@@ -10,7 +10,6 @@
 .hidden {
 	display: none;
 }
- 
 
 /** --------------------------------------------------------------
  * Reset. http://meyerweb.com/eric/tools/css/reset/ v2.0 | 20110126
@@ -224,11 +223,10 @@ body{
 	cursor: pointer;
 }
 
-.card:hover {
-	background: url('../img/testFrame.png'), url('../img/testCard.png');
-	background-size: cover; 
+.card img {
+	width: 100%;
+	height: 100%;
 }
-
 
 #cards {
 	width: 504px;
@@ -431,3 +429,25 @@ input#un-mute:checked ~ .mute img {
   	z-index: -1;
     background-image: url("../img/sprites/timeglass.png");
 }
+
+/** --------------------------------------------------------------
+ * Main menu style.
+ * 
+ */
+ #main-menu {
+ 	text-align: center;
+ 	position: relative;
+ 	
+ 	a#about {
+ 		color: white;
+ 		font-family: black;
+ 		position: absolute;
+ 		top: 20px;
+ 		right: 60px;
+ 		font-size: larger;
+ 	}
+ 	
+ 	a#about:hover {
+ 			text-decoration: none;
+ 	}
+ }

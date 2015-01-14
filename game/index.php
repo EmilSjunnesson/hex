@@ -22,7 +22,9 @@
 <div class="popup" id="score-popup"></div>
 <div id="cards">
 <?php for ($i = 0; $i <12; $i++) : ?>
-<div id="card<?=$i?>" class="card"></div>
+<div id="card<?=$i?>" class="card">
+<img alt="Selected" src="../img/selected.png" />
+</div>
 <?php endfor; ?>
 </div>
 </div>
