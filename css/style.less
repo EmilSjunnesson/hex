@@ -221,6 +221,25 @@ body{
 	float: left;
 	margin: 10px;
 	cursor: pointer;
+	position: relative;
+	
+	span {
+    	display: block;
+    	position: absolute;
+    	top: 0;
+    	left: 0;
+	    height: 100%;
+	    width: 100%;
+	    opacity: 0;
+	    background: rgba(0,0,0,.5);
+	    -moz-transition: all 1s;
+	    -webkit-transition: all 1s;
+	    transition: all 1s;
+	}
+}
+
+.card:hover span {
+    opacity: 1;
 }
 
 .card img {
@@ -317,6 +336,7 @@ input#un-mute:checked ~ .mute img {
  */
 .popup {
 	position: absolute;
+	z-index: 2;
 }
 
 #score-popup {
@@ -370,6 +390,7 @@ input#un-mute:checked ~ .mute img {
   	height: 600px;
   	width: 960px;
   	background:black;
+  	z-index: 1;
 }
   
 /** --------------------------------------------------------------

@@ -1,11 +1,14 @@
 $(document).ready(function(){
    var score, timeBounsSec, timeBonusMin, finalScore,
-   minutes, seconds;
+   minutes, seconds, threshold;
    
    // Get score and timeBonus from the game
    score = $('#score').text();
    timeBounsSec = $('#timeBonus').text();
-   console.log('score: ' + score + ' timeBonus: '+ timeBounsSec);
+   
+   // Get threshold from database
+   threshold = $('#threshold').text();
+   console.log('score: ' + score + ' timeBonus: '+ timeBounsSec + ' threshold: ' + threshold);
 
    timeBonusMin = roundToDecimals(timeBounsSec/60, 2);
    finalScore = calculateFinalScore(score, timeBonusMin);
@@ -18,8 +21,12 @@ $(document).ready(function(){
    $('#finalScore').text(finalScore);
    
    //TODO kolla om nytt highscore annars alternativ spela igen / till menu
-   // HÄMTA HIGHSCORE FRÅN DATABASEN NÄR SIDAN LADDAS
-   // LÄGG SEDAN IN DET I I JS KODEN 
+   if (finalScore > threshold) {
+	   //dirigera till skriv in highscore
+   } else {
+	   // spela igen / till menu
+   }
+   
 });
 
 //get final score from time and score
