@@ -38,6 +38,13 @@ echo "<p class='hidden' id='threshold'>{$threshold}</p>";
 	
 	<p>Final score:<br>
 	<span id="finalScore">0</p>
+	<div id="new-highscore">
+		<p>New highscore!</p>
+		<button id="to-hs">Proceed</button>
+	</div>
+	<div id="no-highscore">
+		<button onclick="location.href='../game'">Play again</button> <button onclick="location.href='../start'">Main menu</button>
+	</div>
 </div>
 
 <?php $path=__DIR__; include(__DIR__ . '/../incl/footer.php'); ?>

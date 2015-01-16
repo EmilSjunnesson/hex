@@ -474,7 +474,7 @@ input#un-mute:checked ~ .mute img {
 }
  
 /** --------------------------------------------------------------
- * Main menu style.
+ * Show score style.
  * 
  */
 #show-score {
@@ -487,8 +487,81 @@ input#un-mute:checked ~ .mute img {
 	font-size: x-large;
 	
 	img {
-		margin-top: 80px;
+		margin-top: 70px;
 		height: 100px;
 	}
+	
+	div p {
+		color: #FFFF5E;
+		font-size: larger;
+		line-height: 30px;
+		margin-bottom: 0.2em;
+	}
+	
+	button {
+		background: #d9bd8c;
+		font-size: 20px;
+		padding-top: 0.4em;
+		font-family: black;
+		cursor: pointer;
+	}
 } 
-  
+ 
+/** --------------------------------------------------------------
+ * Highscore style.
+ * 
+ */  
+ #highscore-scroll {
+	background: url('../img/highscore1.png');
+	background-size: cover;
+	text-align: center;
+	height: 600px;
+	color: black;
+	font-family: black;
+	font-size: x-large;
+	padding-left: 200px;
+	padding-right: 200px;
+	position: relative;
+	
+	p {
+		padding-top: 200px;
+		font-size: 60px;
+	}
+	
+	input {
+		background-color: transparent;
+		border: 0;
+		border-bottom: 3px solid black;
+		font-size: xx-large
+	}
+	
+	input[type="submit"] {
+		font-family: black;
+		height: 36px;
+		margin-left: 0px;
+		border: 0px;
+		cursor: pointer;
+	}
+	
+	input[type="submit"]:hover {
+		color: grey;
+	}
+	
+	table {
+		width: 50%;
+		float: left;
+		margin-top: 200px;
+		border-collapse: separate;
+	}
+	
+	a {
+ 		color: #d9bd8c;
+ 		position: absolute;
+ 		left: 42%;
+ 		bottom: 0px;
+ 	}
+ 	
+ 	a:hover {
+ 			text-decoration: none;
+ 	}
+} 

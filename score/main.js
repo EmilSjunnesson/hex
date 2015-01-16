@@ -20,12 +20,16 @@ $(document).ready(function(){
    $('#timeBonus').text(minutes + ' min ' + seconds + ' sec');
    $('#finalScore').text(finalScore);
    
-   //TODO kolla om nytt highscore annars alternativ spela igen / till menu
+   //kolla om nytt highscore annars alternativ spela igen / till menu
    if (finalScore > threshold) {
-	   //dirigera till skriv in highscore
+	   $('#no-highscore').hide();
    } else {
-	   // spela igen / till menu
+	   $('#new-highscore').hide();
    }
+   
+   $('#to-hs').click(function() {
+	   $.redirectPost('../highscore/index.php?q=new', {score: String(finalScore)});
+   });
    
 });
 
