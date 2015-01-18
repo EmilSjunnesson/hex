@@ -22,7 +22,7 @@ if ((!isset($_POST['score']))) {
 	<p><?=$_POST['score']?></p>
 	<form action="?q=add" method="post">
 		<input type="hidden" value="<?=$_POST['score']?>" name="score" id="score">
-		<input type="text" required="required" autofocus="autofocus" name="name" id="name">
+		<input type="text" required="required" autofocus="autofocus" name="name" id="name" placeholder="Enter your name">
 		<input type="submit" value="OK">
 	</form>
 <?php elseif(isset($_GET['q']) && $_GET['q'] === 'add') : 
@@ -35,8 +35,10 @@ $stmt = $db->prepare('
   VALUES (?, ?);
 ');
 $stmt->execute([$_POST['name'], $_POST['score']]);
-header('Location: index.php');
 ?>
+<script type="text/javascript">
+window.location.href = 'index.php';
+</script>
 <?php else : 
 $stmt = $db->prepare('SELECT * FROM Highscore ORDER BY score DESC LIMIT 10;');
 $stmt->execute();
