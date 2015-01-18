@@ -11,14 +11,14 @@ Hex is a browser card game created by Emil Sjunnesson. The game is mostly coded 
 
 **[SET](http://www.setgame.com/set)**
 
-	Hex’s main competitor if of course the original card game SET. Because Hex is digital and SET is not you 
+Hex’s main competitor if of course the original card game SET. Because Hex is digital and SET is not you 
 	can add loads of functionality. For example every deal has at least one “set”. That is not certain when 
 	you play SET. Hex also stores your score in a high-score-database. Hex also has timers, combo points and 
 	hints. SET does not.
 
 **[New York Times SET](http://www.nytimes.com/crosswords/game/set/?page=set&difficulty=&_r=0)**
 
-	New York Times has a version of set on their website. I plays exactly the same way as the original but 
+New York Times has a version of set on their website. I plays exactly the same way as the original but 
 	it digital. Their version seems a bit buggy and “jumps” around when you press the cards. My version does 
 	not. The NYT one also lacks high-score, timers, combo points and hints. It retains the same style as the 
 	original also. Hex has a more fun theme, but that is of course subjective. The NYT SET does however have 
@@ -32,6 +32,6 @@ At the moment Hex is a solid foundation to build on. I the future it is possible
 
 ## Source code
 
-	Hex uses, LESS modernizer, jQuery and jQuery UI, but they are all included in the package, no further 
+Hex uses, LESS modernizer, jQuery and jQuery UI, but they are all included in the package, no further 
 	downloads required. Feel free to download the code and fiddle around. Most of the code is documented 
 	with small comments.
