@@ -412,5 +412,3 @@ hex.Game = (function(){
 		'win' : win //TODO REMOVE WIN
 	};
 })();
-
-
