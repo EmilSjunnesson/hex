@@ -32,7 +32,6 @@ At the moment Hex is a solid foundation to build on. I the future it is possible
 
 ## Source code
 
-The hex source code is available at [Github](https://github.com/EmilSjunnesson/hex). 
 	Hex uses, LESS modernizer, jQuery and jQuery UI, but they are all included in the package, no further 
 	downloads required. Feel free to download the code and fiddle around. Most of the code is documented 
 	with small comments.
